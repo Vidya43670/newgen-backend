@@ -201,30 +201,31 @@ app.get('/profile/:id', (req, res) => {
   });
 });
 // save couses
-app.post('/saveCourse', (req, res) => {
-  const { userId, career_name } = req.body;
+aapp.post('/saveCourse', (req, res) => {
+  const { userId, careerName } = req.body;
 
-  if (!userId || !career_name) {
+  if (!userId || !careerName) {
     return res.status(400).json({ success: false, message: "Missing fields" });
   }
 
- const checkQuery = 'SELECT * FROM saved_careers WHERE user_id = ? AND career_name = ?';
-const insertQuery = 'INSERT INTO saved_careers (user_id, career_name) VALUES (?, ?)';
+  const checkQuery = 'SELECT * FROM saved_careers WHERE user_id = ? AND career_name = ?';
+  const insertQuery = 'INSERT INTO saved_careers (user_id, career_name) VALUES (?, ?)';
 
-  db.query(checkQuery, [userId, career_name], (err, results) => {
+  db.query(checkQuery, [userId, careerName], (err, results) => {
     if (err) return res.status(500).json({ success: false, message: "DB error", error: err });
 
     if (results.length > 0) {
       return res.status(200).json({ success: false, message: "Already saved" });
     }
 
-    db.query(insertQuery, [userId, career_name], (err, result) => {
+    db.query(insertQuery, [userId, careerName], (err, result) => {
       if (err) return res.status(500).json({ success: false, message: "Insert failed", error: err });
 
-      return res.status(200).json({ success: true, message: "Course saved" });
+      return res.status(201).json({ success: true, message: "Course saved" });
     });
   });
 });
+
 // 🔍 Get all saved career names (for debugging mismatches)
 app.get('/allSavedCareers', (req, res) => {
   const query = 'SELECT DISTINCT career_name FROM saved_careers';
