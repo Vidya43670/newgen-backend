@@ -123,7 +123,7 @@ app.post('/login', (req, res) => {
     }
   });
 });
-//ai route
+// AI route
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
   const apiKey = process.env.OPENAI_API_KEY;
@@ -139,7 +139,7 @@ app.post('/chat', async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-model: "openrouter/openai/gpt-3.5-turbo",
+        model: "openai/gpt-3.5-turbo",  // ✅ Correct model ID
         messages: [
           { role: "system", content: "You are a helpful career advisor for students." },
           { role: "user", content: message }
@@ -155,10 +155,9 @@ model: "openrouter/openai/gpt-3.5-turbo",
     } else {
       res.status(500).send("⚠️ No response from OpenRouter");
     }
+
   } catch (error) {
-const text = await response.text();
-console.error("❌ OpenRouter response (raw):", text);
-res.status(500).send(`⚠️ Failed AI request: ${text}`);
+    console.error("❌ Error fetching from OpenRouter:", error);
     res.status(500).send("⚠️ AI request failed");
   }
 });
