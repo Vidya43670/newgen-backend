@@ -201,7 +201,7 @@ app.get('/profile/:id', (req, res) => {
   });
 });
 // save couses
-aapp.post('/saveCourse', (req, res) => {
+app.post('/saveCourse', (req, res) => {
   const { userId, careerName } = req.body;
 
   if (!userId || !careerName) {
