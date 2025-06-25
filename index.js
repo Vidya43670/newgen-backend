@@ -123,13 +123,13 @@ app.post('/login', (req, res) => {
     }
   });
 });
-
-// ✅ AI Chat Route
+//ai route
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
   const apiKey = process.env.OPENAI_API_KEY;
-  console.log("🔑 API Key:", apiKey);
 
+  console.log("📩 Message from user:", message);
+  console.log("🔑 API Key sent:", apiKey);
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -139,7 +139,7 @@ app.post('/chat', async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-model: "openai/gpt-3.5-turbo",
+model: "openrouter/openai/gpt-3.5-turbo",
         messages: [
           { role: "system", content: "You are a helpful career advisor for students." },
           { role: "user", content: message }
@@ -148,6 +148,7 @@ model: "openai/gpt-3.5-turbo",
     });
 
     const data = await response.json();
+    console.log("🤖 Response from OpenRouter:", data);
 
     if (data.choices && data.choices[0]) {
       res.json({ reply: data.choices[0].message.content });
@@ -155,7 +156,9 @@ model: "openai/gpt-3.5-turbo",
       res.status(500).send("⚠️ No response from OpenRouter");
     }
   } catch (error) {
-    console.error("❌ Error fetching from OpenRouter:", error);
+const text = await response.text();
+console.error("❌ OpenRouter response (raw):", text);
+res.status(500).send(`⚠️ Failed AI request: ${text}`);
     res.status(500).send("⚠️ AI request failed");
   }
 });
