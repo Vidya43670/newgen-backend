@@ -128,6 +128,8 @@ app.post('/login', (req, res) => {
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
   const apiKey = process.env.OPENAI_API_KEY;
+  console.log("🔑 API Key:", apiKey);
+
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -137,7 +139,7 @@ app.post('/chat', async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",
+model: "openai/gpt-3.5-turbo",
         messages: [
           { role: "system", content: "You are a helpful career advisor for students." },
           { role: "user", content: message }
