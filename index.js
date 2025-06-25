@@ -11,7 +11,8 @@ const bodyParser = require('body-parser');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
+
 
 // ✅ Middleware
 app.use(cors({ origin: '*' }));
@@ -20,11 +21,11 @@ app.use(express.json());
 
 // ✅ MySQL connection (Railway)
 const db = mysql.createConnection({
-  host: 'yamanote.proxy.rlwy.net',
-  user: 'root',
-  password: 'dWEYKnQRsORCNXXgQFiBUjqTxRChJGgx',
-  database: 'railway',
-  port: 40297
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
 });
 
 
