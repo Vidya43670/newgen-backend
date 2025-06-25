@@ -139,7 +139,7 @@ app.post('/chat', async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",  // ✅ Correct model ID
+        model: "openai/gpt-4o",  // ✅ Updated to GPT-4o
         messages: [
           { role: "system", content: "You are a helpful career advisor for students." },
           { role: "user", content: message }
@@ -240,5 +240,5 @@ app.get('/allSavedCareers', (req, res) => {
 
 // ✅ Start the server
 app.listen(port, () => {
-  console.log(`✅ Server running at http://localhost:${port}`);
+console.log(`✅ Server is live on port ${port}`);
 });
