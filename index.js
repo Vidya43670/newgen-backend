@@ -139,13 +139,13 @@ app.post('/chat', async (req, res) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-  model: "openai/gpt-4o",
-  messages: [
-    { role: "system", content: "You are a helpful career advisor for students." },
-    { role: "user", content: message }
-  ]
-})
-
+        model: "openai/gpt-4o",
+        messages: [
+          { role: "system", content: "You are a helpful career advisor for students." },
+          { role: "user", content: message }
+        ],
+        max_tokens: 100  // ✅ Limit token usage for free accounts
+      })
     });
 
     const data = await response.json();
