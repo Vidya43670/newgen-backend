@@ -144,7 +144,7 @@ app.post('/chat', async (req, res) => {
           { role: "system", content: "You are a helpful career advisor for students." },
           { role: "user", content: message }
         ],
-        max_tokens: 100  // ✅ Limit token usage for free accounts
+        max_tokens: 500 // ✅ Limit token usage for free accounts
       })
     });
 
